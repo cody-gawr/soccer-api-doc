@@ -85,6 +85,55 @@ paths:
               properties: {}
         description: ''
       parameters: []
+  /auth/signup:
+    post:
+      summary: ''
+      operationId: post-auth-signup
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/User'
+                  status:
+                    $ref: '#/components/schemas/api_status'
+              examples:
+                example-1:
+                  value:
+                    data:
+                      id: 12
+                      name: App
+                      email: test@test.com
+                      updated_at: '2020-10-29T01:31:08.000000Z'
+                      created_at: '2020-10-29T01:31:08.000000Z'
+                      tax_rate: 0
+                    status:
+                      app: Soccer.API
+                      code: 201
+                      message: Successfully created
+      description: Create a user (Test)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: user name
+                  maxLength: 255
+                email:
+                  type: string
+                user_password:
+                  type: string
+              required:
+                - name
+                - email
+                - user_password
 components:
   schemas:
     api_status:
@@ -123,6 +172,28 @@ components:
         - expires_in
         - access_token
         - refresh_token
+    User:
+      title: User
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        email:
+          type: string
+        updated_at:
+          type: string
+        created_at:
+          type: string
+        tax_rate:
+          type: integer
+      required:
+        - id
+        - name
+        - email
+        - updated_at
+        - created_at
   securitySchemes:
     Authorization:
       type: oauth2
