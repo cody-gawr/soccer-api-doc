@@ -102,7 +102,7 @@ paths:
                   status:
                     $ref: '#/components/schemas/api_status'
               examples:
-                example-1:
+                Response-201:
                   value:
                     data:
                       id: 12
@@ -134,6 +134,110 @@ paths:
                 - name
                 - email
                 - user_password
+  /users:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Users
+      responses: {}
+      operationId: get-users
+      parameters:
+        - schema:
+            type: string
+            pattern: '/^(?:\s+)?Bearer\s/'
+          in: header
+          name: Authorization
+          description: Authorization token should be 'Bearer Your Token'
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/User'
+                status:
+                  $ref: '#/components/schemas/api_status'
+              required:
+                - data
+            examples:
+              Response-200:
+                value:
+                  data:
+                    - id: 1
+                      name: Chadrick Hermann
+                      email: sharon32@example.org
+                      updated_at: '2020-10-28 13:29:41'
+                      created_at: '2020-10-28 13:29:41'
+                      tax_rate: 0
+                  status:
+                    app: Soccer.API
+                    code: 200
+                    message: ''
+  /server/ping:
+    get:
+      summary: Your GET endpoint
+      tags:
+        - Server Test
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    required:
+                      - now
+                    properties:
+                      now:
+                        type: string
+                        description: Current time string
+                  status:
+                    $ref: '#/components/schemas/api_status'
+                required:
+                  - data
+                  - status
+              examples:
+                Response-200:
+                  value:
+                    data:
+                      now: string
+                    status:
+                      app: Soccer.API
+                      code: 200
+                      message: Ping Endpoint
+      operationId: get-server-ping
+  /server/version:
+    get:
+      summary: Your GET endpoint
+      tags: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+                  status:
+                    $ref: '#/components/schemas/api_status'
+              examples:
+                Response-200:
+                  value:
+                    data: develop
+                    status:
+                      app: Soccer.API
+                      code: 200
+                      message: string
+      operationId: get-server-version
 components:
   schemas:
     api_status:
@@ -200,3 +304,5 @@ components:
       flows: {}
 tags:
   - name: Authentication
+  - name: Users
+  - name: Server Test
