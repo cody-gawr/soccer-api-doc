@@ -1,0 +1,131 @@
+openapi: 3.0.0
+info:
+  title: Soccer API
+  version: '1.0'
+  description: Soccer Open API documentation
+  license:
+    name: MIT
+    url: 'http://la.api.soccer'
+  contact:
+    email: admin@admin.com
+servers:
+  - url: 'http://la.api.soccer/api/v1'
+paths:
+  /auth/signin:
+    post:
+      summary: SignIn
+      tags:
+        - Authentication
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/authorized_response'
+                  status:
+                    $ref: '#/components/schemas/api_status'
+              examples:
+                Response 200:
+                  value:
+                    data:
+                      token_type: Bearer
+                      expires_in: 86400
+                      access_token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIyIiwianRpIjoiZjZjOTU2OGY2YTYzOGIxNDljNTYxZGNhNDRmMjA5ODRiMzkzODVlOWRjMmIwZGNlYTNhYjlkNWM0ZmFjODdmNmU3NDc3ODQ2ZTI1ZmM5Y2UiLCJpYXQiOjE2MDM5MTg5NjksIm5iZiI6MTYwMzkxODk2OSwiZXhwIjoxNjA0MDA1MzY5LCJzdWIiOiIyIiwic2NvcGVzIjpbXX0.UH7jds0mGz-YF2aCz-XSiYlwPGxzAEP5fy4DvNu2LVSBbh5RRQ68IDWpOkolwmPfY63fXTtmnK0rokt6SqEQ3d_3JtEsvsMbrQItjj_GFM8BB00Nd23WDpY22qkXXxM1gNpFxjqcVmyvDZ_GJ1kCBcTm5cOVuMfg7SFDS_Ew4dnWIqgLKE5-iWkMTEKrF7dI5xMF6o_crmlE9iz9xMDV1medKGdlNOUDML8tc_G4errMsqDGUHp-cDyFzplxMMvF8fJgnXVl-2aLnXCrF4j9iAH5sQs6s1AePrIpXxlxS_uz-O6c_VSPLWUH2WmgIUwQzxkyTfYbKzYbjxZQXn3BKpkBVUog5lIPX4IG1bxTbEiezd5qY_lL0s7WfISKokrrxJWp06URRCBvoF3pB89pNcUg5zRJgHAaFQKkPj5ZLhBXK4r45c14ufcYFpfH-YAWKJJE6csKZqcWsa_E4C9n76qMLUSQ_FrY-QlVE1j2oufCQWIxT5tldAWtE09h7r-flX6T_UR8ykekXrv_RtK2Eg8hJlqMWBeJubnFaVMOECiSM-qyR9Al8FQ8nbxklLr9Y2C5grGnAC-THYIV15BoQLIHksTBl-eZdMvG4NDxB4IHtI6YDDxejyhvvidIabU3YnvreCF6p9nh9iiEWL_SH5_D3i_pf6V73P15DPsvScU
+                      refresh_token: def50200063f4aef436a8ffd15e32d902221b8adf7b06c657028d3c0f68adb016ba1d4ba009589173f563cb1cd3c3dc9fa75488cb08d4aec2b242db4ecdeb65969aa568a3cede23560e6f6d71437cacbb60f47cbb275254e725298628af1ea29ffb4bf2ff7539df5c4c1e7b3132b8cfad6a9d76268f3e34c316a660d3086915103aa6b9f5db9b5ec487617f5c91e405d61d10746b9916843e630b892db5f751b3a4ebf41e51a7206c8bf5f6387456e8987a6637441753a369c998ec626ebf4455933b8ac13708ef6e563d7bd5042d2a802689e0be9158f4616632a2df58d8e39d0517312d2f432a8de6b06045997338009c7239cb5377cae2fc9a3e4c99fa8f1d6ac2b4e24c942b6946af38a8836f84ea71ea285a69afce00b466e72b27f7aa69573136eee69595b286229b8322e065396dd1d67150ffa6ccc39e1eacd208d8b8366f500e460dafe1845f2646ba337e3ab845830090b66a3a064901e3a4a47ce5a
+                    status:
+                      app: Soccer.API
+                      code: 200
+                      message: ''
+      operationId: post-auth-signin
+      description: Generate a access token and a refresh token for the valid user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: string
+                  description: user name or user email
+                password:
+                  type: string
+                  description: user password
+              required:
+                - user
+                - password
+            examples:
+              SignIn Request:
+                value:
+                  user: korey32@example.net
+                  password: password
+          application/xml:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: string
+                  description: user name or user email
+                password:
+                  type: string
+              required:
+                - user
+                - password
+            examples:
+              Request:
+                value:
+                  user: string
+                  password: string
+          text/html:
+            schema:
+              type: object
+              properties: {}
+        description: ''
+      parameters: []
+components:
+  schemas:
+    api_status:
+      title: Status
+      type: object
+      properties:
+        app:
+          type: string
+        code:
+          type: integer
+        message:
+          type: string
+      required:
+        - app
+        - code
+      x-examples:
+        example-1:
+          app: Soccer.API
+          code: 200
+          message: string
+    authorized_response:
+      title: authorized_response
+      type: object
+      description: '200'
+      properties:
+        token_type:
+          type: string
+        expires_in:
+          type: integer
+        access_token:
+          type: string
+        refresh_token:
+          type: string
+      required:
+        - token_type
+        - expires_in
+        - access_token
+        - refresh_token
+  securitySchemes:
+    Authorization:
+      type: oauth2
+      flows: {}
+tags:
+  - name: Authentication
